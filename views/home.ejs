@@ -1,0 +1,67 @@
+<%- include("partials/header") -%>
+
+
+
+<main>
+    <article class="total-expenditure">
+        <h1>Total Expenditure: ₹<%= total %></h1>
+    </article>
+    <h2>Add Item</h2>
+    <div class="container">
+            <div class="row">
+              <div class="col-md-6 offset-md-3">
+                <form action="/" method="post" class="form-control bg-transparent" style="padding: 20px;
+                padding-bottom: 5px;
+                ">
+                    <div class="mb-3 mx-auto p-2">
+                        <input class="form-control" type="text" placeholder="Item Name" name="itemName" required>
+                    </div>
+                    <!--  Quantity -->
+                    <div class="mb-3 mx-auto p-2">
+                        <input class="form-control" type="number" min="0" placeholder="Quantity" class="quantity" name="quantity" required>
+                    </div>
+    
+                    <!-- Unit of Measurement -->
+                    <div class="mb-3 mx-auto p-2">
+                        <select name="unit" class="form-select" aria-label="Default select example" id="inputGroupSelect04" required>
+                            <option value="" disabled selected hidden>Unit of Measurement</option>
+                            <option value="pieces">Pieces</option>
+                            <option value="lbs">Pounds (lbs)</option>
+                            <option value="kg">Kilograms (kg)</option>
+                            <option value="g">Grams (g)</option>
+                            <option value="L">Liters (L)</option>
+                            <option value="mL">Milliliters (mL)</option>
+                            <option value="oz">Ounces (oz)</option>
+                            <option value="packs">Packs</option>
+                            <option value="bundles">Bundles</option>
+                            <option value="boxes">Boxes</option>
+                            <option value="bags">Bags</option>
+                            <option value="cartons">Cartons</option>
+                            <option value="bottles">Bottles</option>
+                            <option value="cups">Cups</option>
+                            <option value="rolls">Rolls</option>
+                            <option value="sheets">Sheets</option>
+                        </select>
+                    </div>
+                    <!--  Category --> 
+
+                    <!--  Price -->
+                    <div class="mb-3 mx-auto p-2">
+                        <input type="number" min="1" step="any" class="form-control" placeholder="Price" name="price" required>
+                    </div>
+    
+                    <div class="mb-3 mx-auto p-2">
+                        <textarea name="note" class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 70px;" maxlength="125"></textarea>
+                        <!-- <label for="floatingTextarea">Comments</label> -->
+                    </div>
+                    <div class="mx-auto p-2">
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+
+    </div>
+</main>
+
+<%- include("partials/footer.ejs") -%>
