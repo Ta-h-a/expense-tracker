@@ -2,10 +2,9 @@ const express  = require("express")
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose");
 const { log } = require("console");
-// const dotenv = require("dotenv")
+
 const app = express()
 
-// dotenv.config()
 
 app.use(express.static("public"));
 
@@ -15,7 +14,7 @@ app.set('view engine','ejs')
 
 // Database
 
-const uri = 'mongodb+srv://admin-taha:'+ process.env.PASSWORD +'@cluster0.h2zkuof.mongodb.net/expenseTrackerDB';
+const uri = 'mongodb+srv://admin-taha:cKDw4VAcUryeNpZy@cluster0.h2zkuof.mongodb.net/expenseTrackerDB';
 
 mongoose.connect(uri,{useNewUrlParser: true})
 
