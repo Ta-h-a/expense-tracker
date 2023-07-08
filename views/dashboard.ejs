@@ -35,6 +35,13 @@
           }
           .display-3 {
             font-size: 30px;
+            font-weight: 1000;
+          }
+          .container p{
+            font-size: 20px;
+          }
+          .table_row {
+            font-size: 15px;
           }
         }
       </style>
@@ -45,7 +52,7 @@
       ">
         <div class="container">
           <h1 class="display-3">Dashboard!📖</h1>
-          <p>This dashboard displays a comprehensive overview of your expense tracking items.</p>
+          <p style="font-weight: 700;">This dashboard displays a comprehensive overview of your expense tracking items.</p>
         </div>
       </div>
     </main>
@@ -54,11 +61,11 @@
             <table class="table table-hover table-dark col-sm-12" id="table" style="border-radius: 10px;">
               <!-- <thead> -->
                 <tr>
-                  <th scope="col">SI</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Total</th>
+                  <th class="table_row" scope="col">SI</th>
+                  <th class="table_row" scope="col">Name</th>
+                  <th class="table_row" scope="col">Price</th>
+                  <th class="table_row" scope="col">Quantity</th>
+                  <th class="table_row" scope="col">Total</th>
                   <!-- <th scope="col">Note</th> -->
                 </tr>
               <!-- </thead> -->
@@ -66,12 +73,12 @@
                   <% for(record of items){ %>
                       <% count += 1; %>
                       <tr> 
-                          <th scope="row"><%= count %></th>
-                          <td><%= record.itemName %></td>
-                          <td><%= record.price %></td>
-                          <td><%= record.quantity%> <%= record.unit %></td>
+                          <th class="table_row" scope="row"><%= count %></th>
+                          <td class="table_row"><%= record.itemName %></td>
+                          <td class="table_row"><%= record.price %></td>
+                          <td class="table_row"><%= record.quantity%> <%= record.unit %></td>
                           <!-- <td><%= record.note %></td> -->
-                          <td><%= record.price * record.quantity %></td>
+                          <td class="table_row"><%= record.price * record.quantity %></td>
                         </tr>
                   <% } count=0  %>
                   
@@ -82,27 +89,27 @@
                   <td>@fat</td>
                 </tr>-->
                 <tr>
-                  <th scope="row" colspan="3">Total</th>
+                  <th class="table_row" scope="row" colspan="3">Total</th>
                   <!-- <td colspan="2">Total</td> -->
                   <!-- <td>*</td> -->
-                  <td>
+                  <td class="table_row">
                       <%= qualityCount %>
                   </td>
-                  <td><%= total %></td>
+                  <td class="table_row"><%= total %></td>
                 </tr> 
               </tbody>
             </table>
         </div>
     </article>
     <article class="col-md-10 offset-md-1">
-      <h1 style="margin: 20px;">Notes</h1>
+      <h1 style="margin: 20px; font-weight: 1000;">Notes</h1>
 
       <table class="table table-hover table-dark" style="border-radius: 10px;">
         <!-- <thead> -->
           <tr>
-            <th scope="col">SI</th>
-            <th scope="col">Name</th>
-            <th scope="col">Notes</th>
+            <th class="table_row" scope="col">SI</th>
+            <th class="table_row" scope="col">Name</th>
+            <th class="table_row" scope="col">Notes</th>
             <!-- <th scope="col">Note</th> -->
           </tr>
         <!-- </thead> -->
@@ -110,9 +117,9 @@
             <% for(record of items){ %>
                 <% count += 1; %>
                 <tr> 
-                    <th scope="row"><%= count %></th>
-                    <td><%= record.itemName %></td>
-                    <td><%= record.note %></td>
+                    <th  class="table_row" scope="row"><%= count %></th>
+                    <td class="table_row" ><%= record.itemName %></td>
+                    <td class="table_row" ><%= record.note %></td>
                   </tr>
             <% } count=0  %> 
         </tbody>
