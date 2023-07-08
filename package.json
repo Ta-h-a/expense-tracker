@@ -1,7 +1,7 @@
 {
   "name": "expense-tracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Expense Tracker Application",
   "main": "app.js",
   "engines": {
     "node": "18.x"
@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mohammed Taha",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
