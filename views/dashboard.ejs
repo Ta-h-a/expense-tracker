@@ -1,27 +1,9 @@
-<!-- <%- include("partials/header") -%>
-
-<div class="jumbotron">
-    <h1 class="display-4">Hello, world!</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-    <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
-  </div>
-
-
-<%- include("partials/footer") -%> -->
-
-
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
     <title>Dashboard</title>
@@ -46,6 +28,16 @@
 
     <main>
 
+      <style>
+        @media screen and (max-width:435px) {
+          *{
+            font-size : 90%;
+          }
+          .display-3 {
+            font-size: 30px;
+          }
+        }
+      </style>
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron" style="
       background-color: #539165;
@@ -57,9 +49,9 @@
         </div>
       </div>
     </main>
-    <article style="padding: 20px;">
+    <article style="padding: auto auto 20px;">
         <div class="col-md-6 offset-md-3">
-            <table class="table table-hover table-dark" style="border-radius: 10px;">
+            <table class="table table-hover table-dark col-sm-12" id="table" style="border-radius: 10px;">
               <!-- <thead> -->
                 <tr>
                   <th scope="col">SI</th>
