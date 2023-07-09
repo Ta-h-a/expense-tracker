@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Database
 
-const uri = 'mongodb+srv://admin-taha:cKDw4VAcUryeNpZy@cluster0.h2zkuof.mongodb.net/expenseTrackerDB?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://admin-taha:'+ process.env.PASSWORD +'@cluster0.h2zkuof.mongodb.net/expenseTrackerDB?retryWrites=true&w=majority';
 
 mongoose.connect(uri,{useNewUrlParser: true})
 
