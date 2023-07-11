@@ -194,7 +194,6 @@
         // Replace the existing heading with the new heading
         headingElement.parentNode.replaceChild(heading, headingElement);
 
-
         quantityAndUnitElement.innerHTML = "Quantity: <span class='item-quantity'><%= item.quantity %></span> <span class='item-unit'><%= item.unit %></span>";
         priceElement.innerHTML = "Price: ₹<span class='item-price'><%= item.price %></span>";
         noteElement.innerHTML = "Note: <span class='item-note'><%- item.note.length > 0 ? item.note : 'No notes were specified' -%></span>";
@@ -203,8 +202,9 @@
         document.querySelector(".edit-btn").classList.remove("d-none");
         document.querySelector(".save-btn").classList.add("d-none");
         document.querySelector(".cancel-btn").classList.add("d-none");
-        listItem[3].classList.remove("d-none")
-        listItem[4].classList.remove("d-none")
+        document.querySelector(".delete-btn").classList.remove("d-none");
+        listItem[3].classList.remove("d-none");
+        listItem[4].classList.remove("d-none");
     })
 //   }
 });

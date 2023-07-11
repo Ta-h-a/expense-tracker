@@ -33,7 +33,7 @@ const expenseSchema = new mongoose.Schema ({
     createdAtDate: String,
     modifiedAt: String,
     modifiedAtDate: String,
-    isActive: Boolean
+    isActive: Boolean,
 })
 
 const Expense = mongoose.model("Expense",expenseSchema)
