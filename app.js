@@ -3,7 +3,7 @@ const bodyParser = require("body-parser")
 const mongoose = require("mongoose");
 const ejs = require("ejs")
 const methodOverride = require('method-override');
-const isLastDay = require("./lastDayOfMonth")
+const nodemailer = require("nodemailer")
 
 const app = express()
 
@@ -73,7 +73,7 @@ note
 // POST request from home page
 app.post("/",function(req,res){
     // Date object for date and createdAt
-    let date = new Date("2023/3/15");
+    let date = new Date();
     // Getting date and createdAt when item is created
 
     let currentDate = date.toLocaleDateString('en-US', {
@@ -252,6 +252,7 @@ app.get("/dashboard/deletedItems",function(req,res){
         // console.log(quantityCount);
         const description = "This dashboard displays a comprehensive overview of deleted items."
 
+        console.log(expenses.length);
         res.render("dashboard",{
             heading: "Deleted Items",
             items: expenses,
@@ -264,6 +265,75 @@ app.get("/dashboard/deletedItems",function(req,res){
             notesSection: false
         })
     })
+})
+
+app.get("/mail/:key",function(req,res){
+    if (req.params.key == 'send'){
+        const config = {
+            service: "gmail",
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false,
+            auth: {
+                user: "tahasindoli04@gmail.com",
+                pass: process.env.MAILPASSWORD
+            }
+        }
+        const send = function(data){
+            const transporter = nodemailer.createTransport(config);
+            transporter.sendMail(data, function(err,info){
+                if (err){
+                    console.log(err);
+                }else{
+                    return info.response;
+                }
+            })
+        }
+        
+
+
+        const date = new Date();
+        date.setMonth(date.getMonth() - 1);
+        
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const formattedDate = `${year}-${month}`;
+        
+        Expense.find({month:formattedDate,isActive:true}).then(function(expenses){
+            let total = 0
+            for(record of expenses){
+                total += record.quantity * record.price
+            }
+            const currentMonth = new Date(formattedDate + '-01').toLocaleString('en-US', { month: 'long' });
+
+            const emailContent = `
+                        <html>
+                            <body>
+                            <p>Dear Mom,</p>
+                            <p>Here is your monthly expenses summary for ${currentMonth}:</p>
+                            <p>Total Expenses: ₹${total}</p>
+                            <p>See maa, the total items you purchased in ${currentMonth} were: ${expenses.length}</p>
+                            <p>If you have any questions or need assistance regarding your expenses, please feel free to buy less items except for my snacks.</p>
+                            <p>Anyways, if you want to check out the expenses of previous months then visit here - <a href="https://expense-tracker-lac-five.vercel.app/budgets">https://expense-tracker-lac-five.vercel.app/budgets</a>.</p>
+                            <img src="https://media2.giphy.com/media/a0N6ZmPmzGIPm/giphy.gif?cid=ecf05e47p9ylir8cfigg3svplgy799sdzdki2zyvwmpyc06a&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="Expense Image">
+                            <p>Thank you,</p>
+                            <p>Your son - Taha</p>
+                            </body>
+                        </html>
+                        `;
+
+            const data = {
+                from: "tahasindoli04@gmail.com",
+                to: "tahasindoli04@gmail.com",
+                subject: "Monthly Expense Estimation",
+                html: emailContent 
+            }
+
+            res.send(send(data))
+        })
+
+
+    }
 })
 
 // For local server
