@@ -1,0 +1,87 @@
+<%- include("partials/header") -%>
+
+
+<style>
+  @media screen and (max-width:435px) {
+    *{
+      font-size : 90%;
+    }
+    .table_row {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<div class="container" style="padding: 20px;">
+  <div class="row" style="margin-bottom: 20px;">
+  <form action="/budgets" method="POST" class="form-control bg-transparent" style="padding: 20px;
+padding-bottom: 5px;
+">
+    <h2 style="color: palegreen;" class="p-2">Search for monthly expenses:</h2>
+    <!-- <input class="form-control" type="month" > -->
+    <div class="mb-3 mx-auto p-1">
+        <input class="form-control" type="month" placeholder="Month" id="monthlyExpenses" name="monthlyExpenses">
+    </div>
+    <div class="mb-2 mx-auto p-1">
+      <button class="btn btn-dark btn-sm " type="submit">Search</button>
+  </div>
+
+  </form>
+</div>
+<div class="row">
+  <h1 style="margin: 20px; font-weight: 700;" class="col"><%= currentMonth %> Expenses: ₹<%= total %></h1>
+            <table class="table table-hover table-dark col-sm-12" id="table" style="border-radius: 10px;">
+            <!-- <thead> -->
+              <tr>
+                <th style="border-top-left-radius: 10px;" class="table_row" scope="col">SI</th>
+                <th class="table_row" scope="col">Name</th>
+                <th class="table_row" scope="col">Price</th>
+                <th class="table_row" scope="col">Quantity</th>
+                <th style="border-top-right-radius: 10px;" class="table_row" scope="col">Total</th>
+                <!-- <th scope="col">Note</th> -->
+              </tr>
+            <!-- </thead> -->
+            <tbody>
+                <% for(record of items){ %>
+                    <% count += 1; %>
+                    <tr> 
+                        <th class="table_row" scope="row"><%= count %></th>
+                        <td class="table_row"><%= record.itemName %></td>
+                        <td class="table_row"><%= record.price %></td>
+                        <td class="table_row"><%= record.quantity%> <%= record.unit %></td>
+                        <!-- <td><%= record.note %></td> -->
+                        <td class="table_row"><%= record.price * record.quantity %></td>
+                      </tr>
+                <% } count=0  %>
+                
+              <!-- <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>-->
+              <tr>
+                <th class="table_row" scope="row" colspan="3">Total</th>
+                <!-- <td colspan="2">Total</td> -->
+                <!-- <td>*</td> -->
+                <td class="table_row">
+                    <%= quantityCount %>
+                </td>
+                <td class="table_row"><%= total %></td>
+              </tr> 
+            </tbody>
+          </table>
+</div>
+</div>
+
+
+
+<script>
+    const monthControl = document.querySelector('input[type="month"]');
+const date= new Date()
+const month=("0" + (date.getMonth() + 1)).slice(-2)
+const year=date.getFullYear()
+monthControl.value = `${year}-${month}`;
+</script>
+
+<%- include("partials/footer") -%>

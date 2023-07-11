@@ -26,7 +26,7 @@
   <body style="margin: 0;
       background-color: #41644A;">
 
-
+<!-- <%- include("partials/navbar.ejs") -%> -->
 <main>
 
       <style>
@@ -42,7 +42,7 @@
             font-size: 20px;
           }
           .table_row {
-            font-size: 15px;
+            font-size: 14;
           }
         }
       </style>
@@ -51,10 +51,14 @@
       background-color: #539165;
       margin: 10px;
       ">
+
         <div class="container">
-          <h1 class="display-3">Dashboard!📖</h1>
-          <p style="font-weight: 500;">This dashboard displays a comprehensive overview of your expense tracking items.</p>
+          <h1 class="display-3"><%= heading %></h1>
+          <p style="font-weight: 500;"><%= description %></p>
+          <a class="btn btn-dark btn-sm" style="color:#ffffff;" href="<%= url %>"><%= word %></a>
         </div>
+        <!-- Edit button -->
+  </td>
       </div>
     </main>
     <article style="padding: auto auto 20px;">
@@ -73,13 +77,13 @@
               <tbody>
                   <% for(record of items){ %>
                       <% count += 1; %>
-                      <tr> 
+                      <tr>
                           <th class="table_row" scope="row"><%= count %></th>
-                          <td class="table_row"><%= record.itemName %></td>
+                          <td class="table_row"><a href="/items/<%= record._id %>" style="color: inherit;"><%= record.itemName %></a></td>
                           <td class="table_row"><%= record.price %></td>
                           <td class="table_row"><%= record.quantity%> <%= record.unit %></td>
                           <!-- <td><%= record.note %></td> -->
-                          <td class="table_row"><%= record.price * record.quantity %></td>
+                          <td class="table_row">₹<%= record.price * record.quantity %></td>
                         </tr>
                   <% } count=0  %>
                   
@@ -94,40 +98,45 @@
                   <!-- <td colspan="2">Total</td> -->
                   <!-- <td>*</td> -->
                   <td class="table_row">
-                      <%= qualityCount %>
+                      <%= quantityCount %>
                   </td>
                   <td class="table_row"><%= total %></td>
                 </tr> 
               </tbody>
             </table>
         </div>
+        
     </article>
     <hr>
-    <article class="col-md-10 offset-md-1">
-      <h1 style="margin: 20px; font-weight: 1000;">Notes</h1>
-
-      <table class="table table-hover table-dark" style="border-radius: 10px;">
-        <!-- <thead> -->
-          <tr>
-            <th class="table_row" scope="col">SI</th>
-            <th class="table_row" scope="col">Name</th>
-            <th class="table_row" scope="col">Notes</th>
-            <!-- <th scope="col">Note</th> -->
-          </tr>
-        <!-- </thead> -->
-        <tbody>
-            <% for(record of items){ %>
-                <% count += 1; %>
-                <tr> 
-                    <th  class="table_row" scope="row"><%= count %></th>
-                    <td class="table_row" ><%= record.itemName %></td>
-                    <td class="table_row" ><%= record.note %></td>
-                  </tr>
-            <% } count=0  %> 
-        </tbody>
-      </table>
-
-    </article>
+    <% if(notesSection){ %>
+      <article class="col-md-10 offset-md-1">
+  
+  
+        <h1 style="margin: 20px; font-weight: 700;">Notes</h1>
+  
+        <table class="table table-hover table-dark" style="border-radius: 10px;">
+          <!-- <thead> -->
+            <tr>
+              <th class="table_row" scope="col">SI</th>
+              <th class="table_row" scope="col">Name</th>
+              <th class="table_row" scope="col">Notes</th>
+              <!-- <th scope="col">Note</th> -->
+            </tr>
+          <!-- </thead> -->
+          <tbody>
+              <% for(record of items){ %>
+                  <% count += 1; %>
+                  <tr> 
+                      <th  class="table_row" scope="row"><%= count %></th>
+                      <td class="table_row" ><%= record.itemName %></td>
+                      <td class="table_row" ><%= record.note %></td>
+                    </tr>
+              <% } count=0  %> 
+          </tbody>
+        </table>
+  
+      </article>
+    <% } %>
   </body>
 </html>
 

@@ -1,0 +1,214 @@
+<%- include("partials/header") -%>
+
+<style>
+    h1{
+        margin-bottom: 40px;
+    }
+</style>
+
+<article>
+
+    <div class="container">
+        <div class="row">
+            <form action="/items/<%= item._id %>" method="post">
+          <div class="col-md-6 offset-md-3 text-center">
+            <h1><%= item.itemName %></h1>
+          </div>
+          <div class="col-md-6 mx-auto">
+            <div class="card bg-dark text-white mx-auto">
+              <div class="card-header text-center">
+                Details
+              </div>
+              <!-- <ul class="list-group list-group-flush">
+                <li class="list-group-item">Quantity: <%= item.quantity %> <%= item.unit %></li>
+                <li class="list-group-item">Price: ₹<%= item.price %></li>
+                <li class="list-group-item">Note: <%- item.note.length > 0 ? item.note : 'No notes were specified' -%></li>
+                <li class="list-group-item">Created at: <%= item.date %></li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary btn-sm">Edit</button>
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </li>
+              </ul> -->
+                <ul class="list-group list-group-flush" id="itemList">
+                    <li class="list-group-item">Quantity: <span class="item-quantity"><%= item.quantity %></span> <span class="item-unit"><%= item.unit %></span></li>
+                    <li class="list-group-item">Price: ₹<span class="item-price"><%= item.price %></span></li>
+                    <li class="list-group-item">Note: <span class="item-note"><%- item.note.length > 0 ? item.note : 'No notes were specified' -%></span></li>
+                    <li class="list-group-item">Created at: <%= item.createdAtDate %></li>
+                    <li class="list-group-item">Modified at: <%= item.modifiedAtDate %></li>
+                </form>
+                    <li class="list-group-item">
+                      <button class="btn btn-primary btn-sm edit-btn" type="button">Edit</button>
+                      <button class="btn btn-success btn-sm save-btn d-none" type="submit">Save</button>
+                      <button class="btn btn-warning btn-sm cancel-btn d-none" type="button">Cancel</button>
+                      <form action="/items/<%= item._id %>/delete" method="POST" style="display: inline-block;">
+                        <button class="btn btn-danger btn-sm delete-btn" type="submit">Delete</button>
+                      </form>
+                    </li>
+                </ul>
+            
+        </div>
+    </div>
+        </div>
+      </div>
+      
+      
+
+</article>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+  var editButtons = document.querySelector(".edit-btn");
+  var saveButtons = document.querySelector(".save-btn");
+
+  // Edit button click event
+    editButtons.addEventListener("click", function() {
+      var listItem = document.querySelectorAll("li.list-group-item");
+
+      var quantityAndUnitElement = listItem[0];
+      var priceElement = listItem[1];
+      var noteElement = listItem[2];
+      var itemNameElement = document.querySelector("h1")
+      
+      var quantityAndUnit = quantityAndUnitElement.textContent;
+      var price = priceElement.textContent;
+      var note = noteElement.textContent;
+      var itemName = itemNameElement.textContent;
+      
+
+      var quantityAndUnitInput = document.createElement("input");
+      quantityAndUnitInput.type = "number";
+      quantityAndUnitInput.classList.add("form-control");
+      quantityAndUnitInput.setAttribute("name", "quantity");
+      quantityAndUnitInput.setAttribute("placeholder", "quantity");
+      quantityAndUnitInput.setAttribute("required","");
+      quantityAndUnitElement.innerHTML = "";
+      quantityAndUnitElement.appendChild(quantityAndUnitInput);
+
+
+      console.log(price);
+
+      var priceInput = document.createElement("input");
+      priceInput.type = "number";
+      priceInput.classList.add("form-control");
+      priceElement.innerHTML = "";
+      priceInput.value = price;
+      priceInput.setAttribute("required","");
+      priceInput.setAttribute("name", "price");
+      priceInput.setAttribute("placeholder", "price");
+      priceElement.appendChild(priceInput);
+
+      var noteInput = document.createElement("input");
+      noteInput.type = "text";
+      noteInput.classList.add("form-control");
+      noteInput.value = note.split(": ")[1];
+      noteElement.innerHTML = "";
+      noteInput.setAttribute("name", "note");
+      noteInput.setAttribute("placeholder", "note");
+      noteElement.appendChild(noteInput);
+
+      var h1Input = document.createElement("input");
+      h1Input.type = "text";
+      h1Input.classList.add("form-control");
+      h1Input.classList.add("classH1")
+      h1Input.value = itemName;
+      itemNameElement.innerHTML = "";
+      h1Input.setAttribute("name", "itemName");
+      h1Input.setAttribute("placeholder", "Item Name");
+      itemNameElement.appendChild(h1Input);
+
+      this.classList.add("d-none");
+      document.querySelector(".delete-btn").classList.add("d-none");
+      document.querySelector(".save-btn").classList.remove("d-none");
+      document.querySelector(".cancel-btn").classList.remove("d-none");
+      listItem[3].classList.add("d-none")
+      listItem[4].classList.add("d-none")
+  })
+
+  // Save button click event
+//   for (var i = 0; i < saveButtons.length; i++) {
+    saveButtons.addEventListener("click", function() {
+      var listItem = document.querySelectorAll("li.list-group-item");
+
+      var quantityAndUnitElement = listItem[0];
+      var priceElement = listItem[1];
+      var noteElement = listItem[2];
+      var headingElement = document.querySelector(".classH1");
+
+      var updatedQuantityAndUnit = quantityAndUnitElement.querySelector("input").value;
+      var updatedPrice = priceElement.querySelector("input").value;
+      var updatedNote = noteElement.querySelector("input").value;
+      var updatedItemName = headingElement.value
+
+      // Validate the inputs
+      if (updatedItemName === "") {
+        event.preventDefault(); // Prevent form submission
+        alert("Item name cannot be empty");
+        return;
+      }
+      
+        if (updatedQuantityAndUnit.trim() === "") {
+            event.preventDefault(); // Prevent form submission
+            alert("Quantity cannot be empty");
+            return;
+        }
+
+      if (updatedPrice.trim() === "") {
+        event.preventDefault(); // Prevent form submission
+        alert("Price cannot be empty");
+        return;
+      }
+
+
+    //   if (updatedNote.trim()==="No notes were specified"||updatedNote.trim()===""){
+    //     noteElement.textContent = "Note: <span class='item-note'>No notes were specified</span>"
+    // }else{
+    //     noteElement.textContent = "Note: <span class='item-note'>" + updatedNote + "</span>";
+    // }
+
+    //   quantityAndUnitElement.textContent = "Quantity: <span class='item-quantity'>" + updatedQuantityAndUnit + "</span> <span class='item-unit'><%= item.unit %></span>";
+    //   priceElement.textContent = "Price: ₹<span class='item-price'>" + updatedPrice + "</span>";
+
+    //   this.classList.add("d-none");
+    //   document.querySelector(".edit-btn").classList.remove("d-none");
+    //   document.querySelector(".cancel-btn").classList.add("d-none");
+
+      // TODO: Send the update request to your server using AJAX or form submission
+      listItem[3].classList.remove("d-none")
+      listItem[4].classList.remove("d-none")
+    });
+
+    document.querySelector(".cancel-btn").addEventListener("click",function(){
+        var listItem = document.querySelectorAll("li.list-group-item");
+
+        var quantityAndUnitElement = listItem[0];
+        var priceElement = listItem[1];
+        var noteElement = listItem[2];
+        var headingElement = document.querySelector(".classH1");
+
+
+        // Reset the content of the elements to their original values
+
+        var heading = document.createElement("h1");
+        heading.textContent = "<%= item.itemName %>";
+
+        // Replace the existing heading with the new heading
+        headingElement.parentNode.replaceChild(heading, headingElement);
+
+
+        quantityAndUnitElement.innerHTML = "Quantity: <span class='item-quantity'><%= item.quantity %></span> <span class='item-unit'><%= item.unit %></span>";
+        priceElement.innerHTML = "Price: ₹<span class='item-price'><%= item.price %></span>";
+        noteElement.innerHTML = "Note: <span class='item-note'><%- item.note.length > 0 ? item.note : 'No notes were specified' -%></span>";
+
+        // Show the Edit button and hide the Save and Cancel buttons
+        document.querySelector(".edit-btn").classList.remove("d-none");
+        document.querySelector(".save-btn").classList.add("d-none");
+        document.querySelector(".cancel-btn").classList.add("d-none");
+        listItem[3].classList.remove("d-none")
+        listItem[4].classList.remove("d-none")
+    })
+//   }
+});
+
+</script>
+
+<%- include("partials/footer") -%>
