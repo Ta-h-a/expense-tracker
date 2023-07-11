@@ -267,8 +267,7 @@ app.get("/dashboard/deletedItems",function(req,res){
     })
 })
 
-app.get("/mail/:key",function(req,res){
-    if (req.params.key == 'send'){
+app.get("/mail/send",function(req,res){
         const config = {
             service: "gmail",
             host: "smtp.gmail.com",
@@ -331,9 +330,6 @@ app.get("/mail/:key",function(req,res){
 
             res.send(send(data))
         })
-
-
-    }
 })
 
 // For local server
